@@ -73,20 +73,17 @@ const createPlace = async (req, res, next) => {
   const { title, description, address, creator } = req.body;
 
   let coordinates;
-  // try {
-  //   coordinates = await getCoordsForAddress(address);
-  // } catch (error) {
-  //   return next(error);
-  // }
+   try {
+    coordinates = await getCoordsForAddress(address);
+   } catch (error) {
+     return next(error);
+  }
 
   const createdPlace = new Place({
     title,
     description,
     address,
-    location: {
-     lat: 40.7484474,
-     lng: -73.9871516
-   },
+    location: coordinates,
     image:
       'https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Empire_State_Building_%28aerial_view%29.jpg/400px-Empire_State_Building_%28aerial_view%29.jpg',
     creator
